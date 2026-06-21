@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Namiru chan AI</title>
+    <style>
+        /* TEMA PREMIUM FULL HITAM (DARK MODE DEFAULT) */
+        :root {
+            --bg-body: #050505;
+            --bg-container: rgba(15, 15, 15, 0.9);
+            --border-color: rgba(255, 255, 255, 0.15);
+            --text-main: #ffffff;
+            --text-sub: #aaaaaa;
+            --bg-header: rgba(10, 10, 10, 0.98);
+            --bg-input: rgba(255, 255, 255, 0.04);
+            --shadow-color: rgba(0, 0, 0, 0.9);
+            --bg-pill: rgba(255, 255, 255, 0.06);
+            --text-pill: #ffffff;
+            --bg-sidebar: #0a0a0a;
+            --bg-sidebar-hover: rgba(255, 255, 255, 0.08);
+            --accent-color: #333333;
+        }
+
+        /* VARIAN LIGHT MODE */
+        [data-theme="light"] {
+            --bg-body: #f5f5f5;
+            --bg-container: rgba(255, 255, 255, 0.95);
+            --border-color: #cccccc;
+            --text-main: #111111;
+            --text-sub: #666666;
+            --bg-header: #222222;
+            --bg-input: rgba(0, 0, 0, 0.05);
+            --shadow-color: rgba(0, 0, 0, 0.05);
+            --bg-pill: #ffffff;
+            --text-pill: #111111;
+            --bg-sidebar: #ffffff;
+            --bg-sidebar-hover: rgba(0, 0, 0, 0.05);
+            --accent-color: #e0e0e0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0; padding: 0;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            transition: background 0.3s, color 0.3s, border-color 0.3s;
+        }
+
+        body, html {
+            width: 100% !important;
+            height: 100% !important;
+            max-height: 100% !important;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            overflow: hidden;
+        }
+
+        .bg-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('Elaina #cosplay #cosplayer #foryou #douyin #majonotabitabi #elaina #elainacosplay (1).webp');
+            background-size: cover; background-position: center;
+            filter: brightness(0.15) blur; z-index: -1;
+        }
+
+        .app-container {
+            display: flex; flex-direction: column;
+            width: 100%; height: 100%;
+            background: var(--bg-container);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* SIDEBAR DRAWER MENU */
+        .sidebar-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7); z-index: 100;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+        }
+        .sidebar-overlay.active { opacity: 1; pointer-events: auto; }
+
+        .sidebar-menu {
+            position: absolute; top: 0; left: -280px; width: 280px; height: 100%;
+            background: var(--bg-sidebar); z-index: 101;
+            display: flex; flex-direction: column; padding: 20px 15px;
+            box-shadow: 5px 0 25px rgba(0,0,0,0.8);
+            border-right: 1px solid var(--border-color);
+            transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding-top: calc(20px + env(safe-area-inset-top));
+        }
+        .sidebar-menu.active { left: 0; }
+
+        .search-container { position: relative; margin-bottom: 20px; }
+        .search-box {
+            width: 100%; background: var(--bg-input); border: 1px solid var(--border-color);
+            padding: 12px 15px 12px 40px; border-radius: 8px; color: var(--text-main);
+            font-size: 13px; outline: none;
+        }
+        .search-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-sub); font-size: 14px; }
+
+        .sidebar-item {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 12px 15px; border-radius: 8px; cursor: pointer;
+            font-size: 14px; font-weight: 500; color: var(--text-main); margin-bottom: 4px;
+        }
+        .sidebar-item:hover { background: var(--bg-sidebar-hover); }
+        .sidebar-left-content { display: flex; align-items: center; gap: 12px; }
+        .sidebar-icon { font-size: 16px; width: 20px; text-align: center; }
+        .sidebar-arrow { font-size: 12px; color: var(--text-sub); }
+        
+        .sidebar-section-title { font-size: 12px; color: var(--text-sub); font-weight: bold; margin: 15px 0 8px 15px; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* LIST PERCAKAPAN HISTORY */
+        .history-list-container {
+            flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; padding-left: 5px;
+        }
+        .history-chat-item {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 10px 12px; border-radius: 8px; cursor: pointer; font-size: 13px; color: var(--text-main);
+        }
+        .history-chat-item:hover, .history-chat-item.active { background: var(--bg-sidebar-hover); }
+        .history-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; margin-right: 8px; }
+        .history-actions { display: flex; gap: 6px; }
+        .btn-history-action { background: none; border: none; cursor: pointer; font-size: 12px; padding: 2px; }
+
+        /* HEADER */
+        .ai-profile-header {
+            background: var(--bg-header); padding: 12px 18px; display: flex; align-items: center; justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+            padding-top: calc(12px + env(safe-area-inset-top)); flex-shrink: 0;
+        }
+        .header-left { display: flex; align-items: center; gap: 15px; }
+        .burger-menu { font-size: 20px; cursor: pointer; color: var(--text-main); user-select: none; padding: 4px; }
+        .ai-title { font-size: 16px; font-weight: bold; color: #ffd700; }
+        
+        .header-right { display: flex; align-items: center; gap: 10px; }
+        .text-avatar-top { font-size: 14px; font-weight: bold; color: #00ffaa; cursor: pointer; padding: 4px 8px; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px dashed var(--border-color); }
+
+        /* BUTTON PRO STYLE */
+        .btn-pro {
+            background: linear-gradient(135deg, #ffd700, #ffa500);
+            border: none; color: #000000; font-size: 12px; font-weight: bold;
+            padding: 5px 10px; border-radius: 20px; cursor: pointer;
+            display: flex; align-items: center; gap: 4px;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+            animation: glowPro 2s infinite alternate;
+        }
+        @keyframes glowPro {
+            0% { box-shadow: 0 0 5px rgba(255, 215, 0, 0.4); }
+            100% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.8); }
+        }
+
+        .chat-box { flex: 1; padding: 20px 18px; overflow-y: auto; -webkit-overflow-scrolling: touch; display: flex; flex-direction: column; gap: 16px; }
+
+        /* DASHBOARD MENU AWAL */
+        .welcome-menu-wrapper { display: flex; flex-direction: column; justify-content: center; margin-top: auto; margin-bottom: auto; padding-bottom: 30px; }
+        .welcome-title-sub { font-size: 15px; color: var(--text-sub); margin-bottom: 6px; font-weight: 500; }
+        .welcome-title-main { font-size: 24px; font-weight: bold; line-height: 1.3; color: var(--text-main); margin-bottom: 25px; }
+        
+        .menu-pills-container { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+        .menu-pill {
+            display: flex; align-items: center; gap: 10px; background: var(--bg-pill); color: var(--text-pill);
+            padding: 10px 20px; border-radius: 30px; font-size: 13px; font-weight: 500;
+            border: 1px solid var(--border-color); cursor: pointer; box-shadow: 0 2px 10px rgba(0,0,0,0.3); transition: transform 0.15s ease, background 0.2s;
+        }
+        .menu-pill:hover { transform: scale(1.03); background: rgba(255, 255, 255, 0.1); }
+
+        /* KELOMPOK GELEMBUNG CHAT DENGAN LOGO TEKS */
+        .msg-row { display: flex; width: 100%; gap: 8px; align-items: flex-start; flex-direction: column; }
+        .msg-row.user-row { align-items: flex-end; }
+        
+        .chat-text-logo { font-size: 11px; font-weight: bold; color: #00ffaa; margin-left: 4px; margin-bottom: -4px; opacity: 0.95; }
+        .chat-text-user-logo { font-size: 11px; font-weight: bold; color: #aaaaaa; margin-right: 4px; margin-bottom: -4px; }
+
+        .msg { max-width: 85%; padding: 10px 14px; font-size: 13px; line-height: 1.5; word-wrap: break-word; width: fit-content; }
+        .msg.namiru { border-radius: 4px 14px 14px 14px; border: 1px solid var(--border-color); }
+        [data-theme="dark"] .msg.namiru { background: rgba(20, 20, 20, 0.95); color: #ffffff; }
+        .msg.user { background: linear-gradient(135deg, #2c2c2c, #111111); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 14px 14px 4px 14px; color: #ffffff; text-align: left; }
+        .msg.loading { background: rgba(255, 255, 255, 0.02); color: var(--text-sub); font-style: italic; border-radius: 10px; border: 1px dashed var(--border-color); }
+        .chat-img { max-width: 100%; max-height: 150px; border-radius: 10px; margin-top: 5px; display: block; }
+
+        /* PREVIEW FOTO */
+        .image-preview-container { display: none; background: rgba(10, 10, 10, 0.98); padding: 8px 12px; align-items: center; justify-content: space-between; border-top: 1px solid var(--border-color); flex-shrink: 0; }
+        .preview-box { display: flex; align-items: center; gap: 10px; }
+        .preview-box img { width: 40px; height: 40px; border-radius: 6px; object-fit: cover; border: 1px solid #ffffff; }
+        .preview-box span { font-size: 11px; color: var(--text-sub); }
+        .btn-cancel-img { background: #ff416c; border: none; color: white; font-size: 10px; padding: 4px 8px; border-radius: 4px; cursor: pointer; }
+
+        /* MODAL / POP-UP PREMIUM PRO */
+        .pro-modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85); z-index: 200;
+            display: none; align-items: center; justify-content: center; padding: 20px;
+        }
+        .pro-modal-box {
+            background: #0d0d0d; border: 2px solid #ffd700; border-radius: 16px;
+            max-width: 400px; width: 100%; padding: 24px; text-align: center;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+            position: relative; animation: modalAnimate 0.3s ease;
+        }
+        @keyframes modalAnimate {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .pro-modal-close {
+            position: absolute; top: 12px; right: 15px; font-size: 24px;
+            color: #ffffff; cursor: pointer; background: none; border: none; z-index: 10;
+        }
+        .pro-banner-text-logo {
+            font-size: 28px; font-weight: bold; color: #00ffaa; margin-bottom: 15px;
+            padding: 15px; background: rgba(255,255,255,0.03); border-radius: 10px;
+            border: 1px dashed rgba(255,255,255,0.1); display: inline-block; width: 100%;
+        }
+        .pro-title { font-size: 20px; font-weight: bold; color: #ffd700; margin-bottom: 5px; }
+        .pro-subtitle { font-size: 12px; color: var(--text-sub); margin-bottom: 15px; }
+        
+        .pro-features-list { text-align: left; background: rgba(255,255,255,0.03); padding: 12px 16px; border-radius: 10px; margin-bottom: 15px; font-size: 11px; border: 1px solid rgba(255,255,255,0.05); }
+        .pro-feature-item { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; color: #ffffff; }
+        .pro-feature-item span { color: #00ffaa; font-weight: bold; }
+
+        .pro-options-container { display: flex; flex-direction: column; gap: 8px; }
+        .pro-option-card {
+            background: #151515; border: 1px solid var(--border-color); border-radius: 10px;
+            padding: 10px 14px; display: flex; align-items: center; justify-content: space-between;
+            cursor: pointer; transition: all 0.2s;
+        }
+        .pro-option-card:hover { border-color: #ffd700; background: #1c1c1c; transform: translateY(-2px); }
+        .pro-option-left { text-align: left; }
+        .pro-duration { font-size: 13px; font-weight: bold; color: #ffffff; }
+        .pro-price { font-size: 11px; color: #ffd700; font-weight: 500; }
+        .btn-pro-buy { background: #ffd700; border: none; color: #000; font-size: 11px; font-weight: bold; padding: 5px 10px; border-radius: 6px; cursor: pointer; }
+
+        /* INPUT AREA BAR BAWAH */
+        .input-area { flex-shrink: 0; display: flex; padding: 12px; background: #080808; border-top: 1px solid var(--border-color); gap: 6px; padding-bottom: calc(12px + env(safe-area-inset-top)); }
+        .input-area input[type="text"] { flex: 1; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 8px; padding: 11px 14px; color: var(--text-main); font-size: 14px; outline: none; }
+        .btn-action { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-color); color: var(--text-main); padding: 0 12px; border-radius: 8px; cursor: pointer; font-size: 15px; display: flex; align-items: center; justify-content: center; }
+        .btn-mic { border-color: #00ffaa; color: #00ffaa; }
+        .btn-mic.recording { background: #ff416c; border-color: #ff416c; color: white; animation: pulseMic 1s infinite; }
+        .input-area button[type="submit"] { background: #ffffff; border: none; color: #000000; padding: 0 16px; border-radius: 8px; font-weight: bold; font-size: 13px; cursor: pointer; }
+
+        @keyframes pulseMic { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+        .branding-footer { text-align: center; font-size: 9px; padding: 4px; color: #666666; background: #030303; flex-shrink: 0; }
+    </style>
+</head>
+<body>
+
+    <div class="bg-overlay"></div>
+
+    <div class="app-container">
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="tutupSidebarMekanis()"></div>
+
+        <div class="sidebar-menu" id="sidebarMenu">
+            <div class="search-container">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-box" placeholder="Telusuri percakapan" id="searchHistoryInput" oninput="filterRiwayatChat()">
+            </div>
+            <div class="sidebar-item" onclick="buatPercakapanBaru(); tutupSidebarMekanis();">
+                <div class="sidebar-left-content">
+                    <span class="sidebar-icon">📝</span>
+                    <span>Percakapan baru</span>
+                </div>
+                <span style="font-size: 16px; color: var(--text-sub);">💬</span>
+            </div>
+            <div class="sidebar-item">
+                <div class="sidebar-left-content">
+                    <span class="sidebar-icon">📁</span>
+                    <span>Item Buatan Saya</span>
+                </div>
+                <span class="sidebar-arrow">❯</span>
+            </div>
+            <div class="sidebar-item" onclick="ubahTemaMekanis();">
+                <div class="sidebar-left-content">
+                    <span class="sidebar-icon">✨</span>
+                    <span>Ubah Mode Tema</span>
+                </div>
+                <span class="sidebar-arrow">❯</span>
+            </div>
+            
+            <div class="sidebar-section-title">Percakapan</div>
+            <div class="history-list-container" id="historyListContainer"></div>
+        </div>
+
+        <div class="ai-profile-header">
+            <div class="header-left">
+                <div class="burger-menu" onclick="bukaSidebarMekanis()">☰</div>
+                <div class="ai-title" id="headerTitle">(^~^)• Namiru chan</div>
+            </div>
+            <div class="header-right">
+                <button class="btn-pro" onclick="bukaModalPro()">👑 PRO</button>
+                <button id="muteBtn" class="btn-action" style="font-size: 11px; padding: 4px 8px;" onclick="toggleMuteMekanis()">🔊 ON</button>
+                <div class="text-avatar-top" onclick="buatPercakapanBaru()">(^~^)</div>
+            </div>
+        </div>
+
+        <div class="chat-box" id="chatBox">
+            <div class="welcome-menu-wrapper" id="welcomeMenu">
+                <div class="welcome-title-sub">Halo Animelovers</div>
+                <div class="welcome-title-main">Sebaiknya kita mulai<br>dari mana?</div>
+                <div class="menu-pills-container">
+                    <div class="menu-pill" onclick="pilihMenuPill('🖼️ Buat Gambar')">🖼️ Buat Gambar</div>
+                    <div class="menu-pill" onclick="pilihMenuPill('🎸 Buat musik')">🎸 Buat musik</div>
+                    <div class="menu-pill" onclick="pilihMenuPill('📝 Tulis apa saja')">📝 Tulis apa saja</div>
+                    <div class="menu-pill" onclick="pilihMenuPill('📚 Bantu belajar')">📚 Bantu belajar</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- POP-UP PREMIUM MODAL -->
+        <div class="pro-modal-overlay" id="proModal">
+            <div class="pro-modal-box">
+                <button class="pro-modal-close" onclick="tutupModalPro()">×</button>
+                <div class="pro-banner-text-logo">(^~^)• Namiru chan</div>
+                <div class="pro-title">Namiru PRO Premium</div>
+                <div class="pro-subtitle">Akses fitur spesial tanpa batas</div>
+                
+                <div class="pro-features-list">
+                    <div class="pro-feature-item"><span>✓</span> Respon AI 10x Lipat Lebih Cepat & Pintar</div>
+                    <div class="pro-feature-item"><span>✓</span> Bebas Generate Gambar & Musik Sepuasnya</div>
+                    <div class="pro-feature-item"><span>✓</span> Mode Custom Voice Namiru chan</div>
+                    <div class="pro-feature-item"><span>✓</span> Full Akses Tanpa Iklan / No Buffering</div>
+                </div>
+
+                <div class="pro-options-container">
+                    <div class="pro-option-card" onclick="prosesBayar('9rb')">
+                        <div class="pro-option-left">
+                            <div class="pro-duration">Paket Otaku</div>
+                            <div class="pro-price">2 Minggu</div>
+                        </div>
+                        <button class="btn-pro-buy">Rp 9.000</button>
+                    </div>
+                    <div class="pro-option-card" onclick="prosesBayar('38rb')">
+                        <div class="pro-option-left">
+                            <div class="pro-duration">Paket Senpai</div>
+                            <div class="pro-price">2 Bulan</div>
+                        </div>
+                        <button class="btn-pro-buy">Rp 38.000</button>
+                    </div>
+                    <div class="pro-option-card" onclick="prosesBayar('100rb')">
+                        <div class="pro-option-left">
+                            <div class="pro-duration">Paket Hokage</div>
+                            <div class="pro-price">5 Bulan</div>
+                        </div>
+                        <button class="btn-pro-buy">Rp 100.000</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="image-preview-container" id="previewContainer">
+            <div class="preview-box">
+                <img id="imgSrcPreview" src="" alt="preview">
+                <span>Foto siap dianalisis...</span>
+            </div>
+            <button class="btn-cancel-img" type="button" onclick="batalPilihFoto()">Hapus</button>
+        </div>
+
+        <form class="input-area" id="inputForm" onsubmit="kirimChatTurbo(event)">
+            <input type="file" id="fileInput" accept="image/*" style="display: none;" onchange="handleFotoTerpilled(event)">
+            <button type="button" class="btn-action" onclick="document.getElementById('fileInput').click()">＋</button>
+            <button type="button" id="micBtn" class="btn-action btn-mic" onclick="mulaiMicPerekam()">🎙️</button>
+            <input type="text" id="userInput" placeholder="Minta Namiru chan" autocomplete="off">
+            <button type="submit">Kirim</button>
+        </form>
+        
+        <div class="branding-footer">© 2026 Hanzz Coding Engine Hub.</div>
+    </div>
+
+    <script>
+        let pengenalSuara;
+        let isMuted = false;
+        let fotoBase64Data = "";
+        let databasePercakapan = JSON.parse(localStorage.getItem('namiru_chats')) || [];
+        let idPercakapanAktif = null;
+
+        const chatBox = document.getElementById('chatBox');
+        const userInput = document.getElementById('userInput');
+        const inputForm = document.getElementById('inputForm');
+        const welcomeMenu = document.getElementById('welcomeMenu');
+        const sidebarMenu = document.getElementById('sidebarMenu');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const historyListContainer = document.getElementById('historyListContainer');
+
+        function bukaModalPro() { document.getElementById('proModal').style.display = 'flex'; }
+        function tutupModalPro() { document.getElementById('proModal').style.display = 'none'; }
+        
+        function prosesBayar(paket) { 
+            tutupModalPro();
+            if (paket === '9rb') {
+                window.open('https://link.dana.id/minta?full_url=https://qr.dana.id/v1/281012092026052941286270', '_blank');
+            } else if (paket === '38rb') {
+                window.open('https://link.dana.id/minta?full_url=https://qr.dana.id/v1/281012092026052953731532', '_blank');
+            } else if (paket === '100rb') {
+                window.open('https://link.dana.id/minta?full_url=https://qr.dana.id/v1/281012092026052907097001', '_blank');
+            }
+        }
+
+        function bukaSidebarMekanis() { sidebarMenu.classList.add('active'); sidebarOverlay.classList.add('active'); renderRiwayatSidebar(); }
+        function tutupSidebarMekanis() { sidebarMenu.classList.remove('active'); sidebarOverlay.classList.remove('active'); }
+
+        function samakanTinggiLayarMekanis() {
+            let tinggiAsli = window.innerHeight;
+            document.body.style.height = tinggiAsli + "px";
+            document.documentElement.style.height = tinggiAsli + "px";
+        }
+        window.addEventListener('resize', samakanTinggiLayarMekanis);
+        window.addEventListener('load', () => { samakanTinggiLayarMekanis(); renderRiwayatSidebar(); });
+
+        function pilihMenuPill(perintahTeks) { welcomeMenu.style.display = "none"; userInput.value = perintahTeks; userInput.focus(); }
+        function toggleMuteMekanis() { isMuted = !isMuted; document.getElementById('muteBtn').textContent = isMuted ? "🔇 MUTE" : "🔊 ON"; if(isMuted) window.speechSynthesis.cancel(); }
+        function ubahTemaMekanis() { const body = document.body; body.setAttribute('data-theme', body.getAttribute('data-theme') === 'light' ? 'dark' : 'light'); }
+
+        function namiruBicaraOtomatis(teks) {
+            if (isMuted || !('speechSynthesis' in window)) return;
+            window.speechSynthesis.cancel();
+            let suara = new SpeechSynthesisUtterance(teks.replace(/[*#_`\-]/g, ''));
+            suara.lang = 'id-ID'; suara.pitch = 1.3; suara.rate = 1.2;
+            window.speechSynthesis.speak(suara);
+        }
+
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            pengenalSuara = new SpeechRecognition(); pengenalSuara.lang = 'id-ID';
+            pengenalSuara.onresult = function(e) { userInput.value = e.results[0][0].transcript; };
+            pengenalSuara.onend = function() { document.getElementById('micBtn').classList.remove('recording'); };
+        }
+        function mulaiMicPerekam() { if (pengenalSuara) { document.getElementById('micBtn').classList.add('recording'); pengenalSuara.start(); } }
+
+        function handleFotoTerpilled(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                fotoBase64Data = e.target.result;
+                document.getElementById('imgSrcPreview').src = fotoBase64Data;
+                document.getElementById('previewContainer').style.display = 'flex';
+                welcomeMenu.style.display = "none";
+                if(userInput.value.trim() === "") userInput.value = "Jelaskan foto ini";
+                chatBox.scrollTop = chatBox.scrollHeight;
+            };
+            reader.readAsDataURL(file);
+        }
+        function batalPilihFoto() { fotoBase64Data = ""; document.getElementById('fileInput').value = ""; document.getElementById('previewContainer').style.display = 'none'; }
+
+        function simpanKeLocalStorage() { localStorage.setItem('namiru_chats', JSON.stringify(databasePercakapan)); }
+
+        function renderRiwayatSidebar(filterText = "") {
+            if (!historyListContainer) return;
+            historyListContainer.innerHTML = "";
+            if (!databasePercakapan || databasePercakapan.length === 0) {
+                historyListContainer.innerHTML = `<div style="font-size: 13px; color: var(--text-sub); font-style: italic; padding-left: 10px;">Belum ada riwayat...</div>`;
+                return;
+            }
+            databasePercakapan.forEach(chat => {
+                if (filterText && !chat.judul.toLowerCase().includes(filterText.toLowerCase())) return;
+                let item = document.createElement('div');
+                item.className = `history-chat-item ${chat.id === idPercakapanAktif ? 'active' : ''}`;
+                
+                let textWrapper = document.createElement('div');
+                textWrapper.className = 'history-text';
+                textWrapper.textContent = chat.judul;
+                textWrapper.onclick = function() { bukaPercakapanLama(chat.id); };
+
+                let actionDiv = document.createElement('div');
+                actionDiv.className = 'history-actions';
+
+                let editBtn = document.createElement('button');
+                editBtn.className = 'btn-history-action'; editBtn.textContent = '✏️'; editBtn.type = 'button';
+                editBtn.onclick = function(e) {
+                    e.stopPropagation();
+                    let namaBaru = prompt("Ubah nama ide pokok percakapan:", chat.judul);
+                    if (namaBaru && namaBaru.trim() !== "") { chat.judul = namaBaru.trim(); simpanKeLocalStorage(); renderRiwayatSidebar(); }
+                };
+
+                let deleteBtn = document.createElement('button');
+                deleteBtn.className = 'btn-history-action'; deleteBtn.textContent = '❌'; deleteBtn.type = 'button';
+                deleteBtn.onclick = function(e) {
+                    e.stopPropagation();
+                    if (confirm("Hapus percakapan ini secara permanen?")) {
+                        databasePercakapan = databasePercakapan.filter(c => c.id !== chat.id);
+                        simpanKeLocalStorage();
+                        if (idPercakapanAktif === chat.id) buatPercakapanBaru();
+                        renderRiwayatSidebar();
+                    }
+                };
+
+                actionDiv.appendChild(editBtn); actionDiv.appendChild(deleteBtn);
+                item.appendChild(textWrapper); item.appendChild(actionDiv);
+                historyListContainer.appendChild(item);
+            });
+        }
+
+        function filterRiwayatChat() { renderRiwayatSidebar(document.getElementById('searchHistoryInput').value); }
+        function buatPercakapanBaru() { idPercakapanAktif = null; chatBox.innerHTML = ""; chatBox.appendChild(welcomeMenu); welcomeMenu.style.display = "flex"; document.getElementById('headerTitle').textContent = "(^~^)• Namiru chan"; }
+
+        function bukaPercakapanLama(id) {
+            idPercakapanAktif = id;
+            let dataChat = databasePercakapan.find(c => c.id === id);
+            if (!dataChat) return;
+            welcomeMenu.style.display = "none"; chatBox.innerHTML = "";
+            document.getElementById('headerTitle').textContent = dataChat.judul;
+            dataChat.logs.forEach(log => {
+                let row = document.createElement('div');
+                row.className = `msg-row ${log.role === 'user' ? 'user-row' : 'namiru-row'}`;
+                
+                let tagLogo = document.createElement('div');
+                if(log.role === 'namiru') {
+                    tagLogo.className = 'chat-text-logo'; tagLogo.textContent = '(^~^)• Namiru chan';
+                } else {
+                    tagLogo.className = 'chat-text-user-logo'; tagLogo.textContent = 'Kamu';
+                }
+                row.appendChild(tagLogo);
+                
+                let bubble = document.createElement('div');
+                bubble.className = `msg ${log.role}`; bubble.innerHTML = log.text; 
+                row.appendChild(bubble);
+                chatBox.appendChild(row);
+            });
+            chatBox.scrollTop = chatBox.scrollHeight; tutupSidebarMekanis();
+        }
+
+        async function dapatkanBalasanTurboAI(pertanyaan, base64Image) {
+            const turboPrompt = "Kamu adalah Namiru chan, AI responsif buatan Bos ABHIZAN. Jawab dengan padat, langsung inti pokok, ramah, santai & cepat.";
+            let messageContent = [];
+            if (base64Image) {
+                messageContent.push({ type: "text", text: pertanyaan });
+                messageContent.push({ type: "image_url", image_url: { url: `data:image/jpeg;base64,${base64Image.split(',')[1]}` } });
+            } else { messageContent = pertanyaan; }
+
+            try {
+                const response = await fetch("https://text.pollinations.ai/", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        messages: [{ role: "system", content: turboPrompt }, { role: "user", content: messageContent }],
+                        model: "openai",
+                        stream: false
+                    })
+                });
+                if (response.ok) return (await response.text()).trim();
+                return "Jaringan terputus. Kirim ulang, Bang.";
+            } catch (error) { return "Gagal memuat jawaban."; }
+        }
+
+        async function kirimChatTurbo(event) {
+            event.preventDefault();
+            const teksUser = userInput.value.trim();
+            const cacheFoto = fotoBase64Data;
+            if (teksUser === "" && !cacheFoto) return;
+
+            welcomeMenu.style.display = "none";
+            
+            let userRow = document.createElement('div');
+            userRow.className = 'msg-row user-row';
+            
+            let userTag = document.createElement('div');
+            userTag.className = 'chat-text-user-logo'; userTag.textContent = 'Kamu';
+            userRow.appendChild(userTag);
+
+            let userBubble = document.createElement('div');
+            userBubble.className = 'msg user'; userBubble.textContent = teksUser;
+            if (cacheFoto) {
+                let imgEl = document.createElement('img'); imgEl.src = cacheFoto; imgEl.className = 'chat-img'; userBubble.appendChild(imgEl);
+            }
+            userRow.appendChild(userBubble);
+            chatBox.appendChild(userRow);
+            
+            userInput.value = ""; batalPilihFoto(); chatBox.scrollTop = chatBox.scrollHeight;
+
+            if (idPercakapanAktif === null) {
+                idPercakapanAktif = "chat_" + Date.now();
+                let idePokokJudul = teksUser ? teksUser.substring(0, 15) + "..." : "Analisis Foto...";
+                databasePercakapan.unshift({ id: idPercakapanAktif, judul: idePokokJudul, logs: [] });
+                document.getElementById('headerTitle').textContent = idePokokJudul;
+            }
+
+            let sesiAktif = databasePercakapan.find(c => c.id === idPercakapanAktif);
+            if (sesiAktif) sesiAktif.logs.push({ role: 'user', text: userBubble.innerHTML });
+
+            let loadRow = document.createElement('div');
+            loadRow.className = 'msg-row namiru-row';
+            let avLoad = document.createElement('div'); avLoad.className = 'chat-text-logo'; avLoad.textContent = '(^~^)• Namiru chan'; loadRow.appendChild(avLoad);
+            let loadingBubble = document.createElement('div');
+            loadingBubble.className = 'msg namiru loading'; loadingBubble.textContent = "...";
+            loadRow.appendChild(loadingBubble); chatBox.appendChild(loadRow); chatBox.scrollTop = chatBox.scrollHeight;
+
+            let balasanAI = await dapatkanBalasanTurboAI(teksUser || "Jelaskan foto ini", cacheFoto);
+            if (chatBox.contains(loadRow)) chatBox.removeChild(loadRow);
+
+            let namiruRow = document.createElement('div');
+            namiruRow.className = 'msg-row namiru-row';
+            let avNamiru = document.createElement('div'); avNamiru.className = 'chat-text-logo'; avNamiru.textContent = '(^~^)• Namiru chan'; namiruRow.appendChild(avNamiru);
+            let namiruBubble = document.createElement('div');
+            namiruBubble.className = 'msg namiru'; namiruBubble.innerHTML = balasanAI.replace(/\n/g, "<br>");
+            namiruRow.appendChild(namiruBubble); chatBox.appendChild(namiruRow);
+            
+            if (sesiAktif) { sesiAktif.logs.push({ role: 'namiru', text: namiruBubble.innerHTML }); simpanKeLocalStorage(); }
+            namiruBicaraOtomatis(balasanAI); chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    </script>
+</body>
+</html>
