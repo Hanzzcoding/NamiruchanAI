@@ -180,6 +180,13 @@
         .msg.loading { background: rgba(255, 255, 255, 0.02); color: var(--text-sub); font-style: italic; border-radius: 10px; border: 1px dashed var(--border-color); }
         .chat-img { max-width: 100%; max-height: 150px; border-radius: 10px; margin-top: 5px; display: block; }
 
+        /* ANIMASI LOADING TITIK GOYANG */
+        .dot-pulse { display: flex; gap: 4px; padding: 4px 8px; }
+        .dot-pulse span { width: 6px; height: 6px; background: var(--text-sub); border-radius: 50%; animation: pulse 1.4s infinite ease-in-out both; }
+        .dot-pulse span:nth-child(1) { animation-delay: -0.32s; }
+        .dot-pulse span:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes pulse { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+
         /* PREVIEW FOTO */
         .image-preview-container { display: none; background: rgba(10, 10, 10, 0.98); padding: 8px 12px; align-items: center; justify-content: space-between; border-top: 1px solid var(--border-color); flex-shrink: 0; }
         .preview-box { display: flex; align-items: center; gap: 10px; }
@@ -306,7 +313,6 @@
             </div>
         </div>
 
-        <!-- POP-UP PREMIUM MODAL -->
         <div class="pro-modal-overlay" id="proModal">
             <div class="pro-modal-box">
                 <button class="pro-modal-close" onclick="tutupModalPro()">×</button>
@@ -581,7 +587,8 @@
             loadRow.className = 'msg-row namiru-row';
             let avLoad = document.createElement('div'); avLoad.className = 'chat-text-logo'; avLoad.textContent = '(^~^)• Namiru chan'; loadRow.appendChild(avLoad);
             let loadingBubble = document.createElement('div');
-            loadingBubble.className = 'msg namiru loading'; loadingBubble.textContent = "...";
+            loadingBubble.className = 'msg namiru loading';
+            loadingBubble.innerHTML = '<div class="dot-pulse"><span></span><span></span><span></span></div>';
             loadRow.appendChild(loadingBubble); chatBox.appendChild(loadRow); chatBox.scrollTop = chatBox.scrollHeight;
 
             let balasanAI = await dapatkanBalasanTurboAI(teksUser || "Jelaskan foto ini", cacheFoto);
@@ -600,3 +607,4 @@
     </script>
 </body>
 </html>
+
