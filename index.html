@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -133,7 +132,7 @@
         }
         .header-left { display: flex; align-items: center; gap: 15px; }
         .burger-menu { font-size: 20px; cursor: pointer; color: var(--text-main); user-select: none; padding: 4px; }
-        .ai-title { font-size: 16px; font-weight: bold; color: #ffd700; }
+        .ai-title { font-size: 16px; font-weight: bold; color: #ffd700; display: inline-flex; align-items: center; gap: 8px; }
         
         .header-right { display: flex; align-items: center; gap: 10px; }
         .text-avatar-top { font-size: 14px; font-weight: bold; color: #00ffaa; cursor: pointer; padding: 4px 8px; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px dashed var(--border-color); }
@@ -171,7 +170,7 @@
         .msg-row { display: flex; width: 100%; gap: 8px; align-items: flex-start; flex-direction: column; }
         .msg-row.user-row { align-items: flex-end; }
         
-        .chat-text-logo { font-size: 11px; font-weight: bold; color: #00ffaa; margin-left: 4px; margin-bottom: -4px; opacity: 0.95; }
+        .chat-text-logo { font-size: 11px; font-weight: bold; color: #00ffaa; margin-left: 4px; margin-bottom: -4px; opacity: 0.95; display: inline-flex; align-items: center; gap: 6px; }
         .chat-text-user-logo { font-size: 11px; font-weight: bold; color: #aaaaaa; margin-right: 4px; margin-bottom: -4px; }
 
         .msg { max-width: 85%; padding: 10px 14px; font-size: 13px; line-height: 1.5; word-wrap: break-word; width: fit-content; }
@@ -218,7 +217,7 @@
         .pro-banner-text-logo {
             font-size: 28px; font-weight: bold; color: #00ffaa; margin-bottom: 15px;
             padding: 15px; background: rgba(255,255,255,0.03); border-radius: 10px;
-            border: 1px dashed rgba(255,255,255,0.1); display: inline-block; width: 100%;
+            border: 1px dashed rgba(255,255,255,0.1); display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%;
         }
         .pro-title { font-size: 20px; font-weight: bold; color: #ffd700; margin-bottom: 5px; }
         .pro-subtitle { font-size: 12px; color: var(--text-sub); margin-bottom: 15px; }
@@ -292,7 +291,10 @@
         <div class="ai-profile-header">
             <div class="header-left">
                 <div class="burger-menu" onclick="bukaSidebarMekanis()">☰</div>
-                <div class="ai-title" id="headerTitle">(^~^)• Namiru chan</div>
+                <div class="ai-title" id="headerTitle">
+                    <img src="https://i.postimg.cc/x1kc0Bzk/IMG-20260704-WA0021.jpg" style="width: 24px; height: 24px; border-radius: 50%; object-fit: cover; vertical-align: middle;">
+                    <span>(^~^)• Namiru chan</span>
+                </div>
             </div>
             <div class="header-right">
                 <button class="btn-pro" onclick="bukaModalPro()">👑 PRO</button>
@@ -317,7 +319,10 @@
         <div class="pro-modal-overlay" id="proModal">
             <div class="pro-modal-box">
                 <button class="pro-modal-close" onclick="tutupModalPro()">×</button>
-                <div class="pro-banner-text-logo">(^~^)• Namiru chan</div>
+                <div class="pro-banner-text-logo">
+                    <img src="https://i.postimg.cc/x1kc0Bzk/IMG-20260704-WA0021.jpg" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; vertical-align: middle;">
+                    <span>(^~^)• Namiru chan</span>
+                </div>
                 <div class="pro-title">Namiru PRO Premium</div>
                 <div class="pro-subtitle">Akses fitur spesial tanpa batas</div>
                 
@@ -498,7 +503,7 @@
         }
 
         function filterRiwayatChat() { renderRiwayatSidebar(document.getElementById('searchHistoryInput').value); }
-        function buatPercakapanBaru() { idPercakapanAktif = null; chatBox.innerHTML = ""; chatBox.appendChild(welcomeMenu); welcomeMenu.style.display = "flex"; document.getElementById('headerTitle').textContent = "(^~^)• Namiru chan"; }
+        function buatPercakapanBaru() { idPercakapanAktif = null; chatBox.innerHTML = ""; chatBox.appendChild(welcomeMenu); welcomeMenu.style.display = "flex"; document.getElementById('headerTitle').innerHTML = '<img src="https://i.postimg.cc/x1kc0Bzk/IMG-20260704-WA0021.jpg" style="width: 24px; height: 24px; border-radius: 50%; object-fit: cover; vertical-align: middle;"> <span>(^~^)• Namiru chan</span>'; }
 
         function bukaPercakapanLama(id) {
             idPercakapanAktif = id;
@@ -512,7 +517,7 @@
                 
                 let tagLogo = document.createElement('div');
                 if(log.role === 'namiru') {
-                    tagLogo.className = 'chat-text-logo'; tagLogo.textContent = '(^~^)• Namiru chan';
+                    tagLogo.className = 'chat-text-logo'; tagLogo.innerHTML = '<img src="https://i.postimg.cc/x1kc0Bzk/IMG-20260704-WA0021.jpg" style="width: 18px; height: 18px; border-radius: 50%; object-fit: cover; vertical-align: middle;">(^~^)• Namiru chan';
                 } else {
                     tagLogo.className = 'chat-text-user-logo'; tagLogo.textContent = 'Kamu';
                 }
@@ -549,11 +554,53 @@
             } catch (error) { return "Gagal memuat jawaban."; }
         }
 
+        // FUNGSI BARU UNTUK GENERATE GAMBAR
+        async function generateGambarAI(prompt) {
+            let idLoading = "load_" + Date.now();
+            let loadRow = document.createElement('div');
+            loadRow.id = idLoading;
+            loadRow.className = 'msg-row namiru-row';
+            loadRow.innerHTML = `<div class="chat-text-logo"><img src="https://i.postimg.cc/x1kc0Bzk/IMG-20260704-WA0021.jpg" style="width: 18px; height: 18px; border-radius: 50%;"> Namiru chan</div><div class="msg namiru loading">Sedang menggambar... 🎨</div>`;
+            chatBox.appendChild(loadRow);
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            const imageUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=768&height=768&nologo=true&seed=42`;
+
+            // Membuat objek gambar untuk memastikan sudah terload
+            const img = new Image();
+            img.src = imageUrl;
+            img.onload = () => {
+                let namiruRow = document.createElement('div');
+                namiruRow.className = 'msg-row namiru-row';
+                namiruRow.innerHTML = `
+                    <div class="chat-text-logo"><img src="https://i.postimg.cc/x1kc0Bzk/IMG-20260704-WA0021.jpg" style="width: 18px; height: 18px; border-radius: 50%;"> Namiru chan</div>
+                    <div class="msg namiru">Ini gambarnya, Bang! <br> 
+                        <a href="${imageUrl}" target="_blank">
+                            <img src="${imageUrl}" style="max-width: 100%; border-radius: 12px; margin-top: 10px;">
+                        </a>
+                    </div>`;
+                
+                chatBox.removeChild(document.getElementById(idLoading));
+                chatBox.appendChild(namiruRow);
+                chatBox.scrollTop = chatBox.scrollHeight;
+            };
+        }
+
         async function kirimChatTurbo(event) {
             event.preventDefault();
             const teksUser = userInput.value.trim();
             const cacheFoto = fotoBase64Data;
             if (teksUser === "" && !cacheFoto) return;
+
+            // Fitur generate gambar langsung
+            if (teksUser.toLowerCase().startsWith("buat gambar")) {
+                const promptGambar = teksUser.replace(/buat gambar/i, "").trim();
+                if(promptGambar) {
+                    generateGambarAI(promptGambar);
+                    userInput.value = "";
+                    return;
+                }
+            }
 
             welcomeMenu.style.display = "none";
             
@@ -586,7 +633,7 @@
 
             let loadRow = document.createElement('div');
             loadRow.className = 'msg-row namiru-row';
-            let avLoad = document.createElement('div'); avLoad.className = 'chat-text-logo'; avLoad.textContent = '(^~^)• Namiru chan'; loadRow.appendChild(avLoad);
+            let avLoad = document.createElement('div'); avLoad.className = 'chat-text-logo'; avLoad.innerHTML = '<img src="https://i.postimg.cc/x1kc0Bzk/IMG-20260704-WA0021.jpg" style="width: 18px; height: 18px; border-radius: 50%; object-fit: cover; vertical-align: middle;">(^~^)• Namiru chan'; loadRow.appendChild(avLoad);
             let loadingBubble = document.createElement('div');
             loadingBubble.className = 'msg namiru loading';
             loadingBubble.innerHTML = '<div class="dot-pulse"><span></span><span></span><span></span></div>';
@@ -597,7 +644,7 @@
 
             let namiruRow = document.createElement('div');
             namiruRow.className = 'msg-row namiru-row';
-            let avNamiru = document.createElement('div'); avNamiru.className = 'chat-text-logo'; avNamiru.textContent = '(^~^)• Namiru chan'; namiruRow.appendChild(avNamiru);
+            let avNamiru = document.createElement('div'); avNamiru.className = 'chat-text-logo'; avNamiru.innerHTML = '<img src="https://i.postimg.cc/x1kc0Bzk/IMG-20260704-WA0021.jpg" style="width: 18px; height: 18px; border-radius: 50%; object-fit: cover; vertical-align: middle;">(^~^)• Namiru chan'; namiruRow.appendChild(avNamiru);
             let namiruBubble = document.createElement('div');
             namiruBubble.className = 'msg namiru'; namiruBubble.innerHTML = balasanAI.replace(/\n/g, "<br>");
             namiruRow.appendChild(namiruBubble); chatBox.appendChild(namiruRow);
