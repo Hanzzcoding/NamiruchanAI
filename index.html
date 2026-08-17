@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Namiru chan AI</title>
+    <title>Namiru chan AI - Spesial HUT RI 81</title>
     <style>
-        /* TEMA PREMIUM FULL HITAM (DARK MODE DEFAULT) */
+        /* TEMA DEFAULT: KEMERDEKAAN / FULL HITAM ELEGAN */
         :root {
             --bg-body: #050505;
-            --bg-container: rgba(15, 15, 15, 0.9);
+            --bg-container: rgba(15, 15, 15, 0.92);
             --border-color: rgba(255, 255, 255, 0.15);
             --text-main: #ffffff;
             --text-sub: #aaaaaa;
@@ -19,10 +19,11 @@
             --text-pill: #ffffff;
             --bg-sidebar: #0a0a0a;
             --bg-sidebar-hover: rgba(255, 255, 255, 0.08);
-            --accent-color: #333333;
+            --bg-image: url('https://files.catbox.moe/xm3wi5.png');
+            --filter-bg: brightness(0.25) blur(3px);
         }
 
-        /* VARIAN LIGHT MODE */
+        /* VARIAN TEMA ALTERNATIF (LIGHT / STANDARD) */
         [data-theme="light"] {
             --bg-body: #f5f5f5;
             --bg-container: rgba(255, 255, 255, 0.95);
@@ -36,7 +37,8 @@
             --text-pill: #111111;
             --bg-sidebar: #ffffff;
             --bg-sidebar-hover: rgba(0, 0, 0, 0.05);
-            --accent-color: #e0e0e0;
+            --bg-image: none;
+            --filter-bg: none;
         }
 
         * {
@@ -57,11 +59,12 @@
             overflow: hidden;
         }
 
+        /* BACKGROUND DINAMIS TEMA KEMERDEKAAN */
         .bg-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('Elaina #cosplay #cosplayer #foryou #douyin #majonotabitabi #elaina #elainacosplay (1).webp');
+            background-image: var(--bg-image);
             background-size: cover; background-position: center;
-            filter: brightness(0.15) blur(5px); z-index: -1;
+            filter: var(--filter-bg); z-index: -1;
         }
 
         .app-container {
@@ -132,35 +135,34 @@
         }
         .header-left { display: flex; align-items: center; gap: 15px; }
         .burger-menu { font-size: 20px; cursor: pointer; color: var(--text-main); user-select: none; padding: 4px; }
-        .ai-title { font-size: 16px; font-weight: bold; color: #ffd700; display: inline-flex; align-items: center; gap: 8px; }
+        .ai-title { font-size: 15px; font-weight: bold; color: #ff3333; display: inline-flex; align-items: center; gap: 8px; }
         
         .header-right { display: flex; align-items: center; gap: 10px; }
-        .text-avatar-top { font-size: 14px; font-weight: bold; color: #00ffaa; cursor: pointer; padding: 4px 8px; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px dashed var(--border-color); }
+        .text-avatar-top { font-size: 14px; font-weight: bold; color: #ffcc00; cursor: pointer; padding: 4px 8px; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px dashed var(--border-color); }
 
         /* BUTTON PRO STYLE */
         .btn-pro {
-            background: linear-gradient(135deg, #ffd700, #ffa500);
-            border: none; color: #000000; font-size: 12px; font-weight: bold;
+            background: linear-gradient(135deg, #ff3333, #ff9900);
+            border: none; color: #ffffff; font-size: 12px; font-weight: bold;
             padding: 5px 10px; border-radius: 20px; cursor: pointer;
             display: flex; align-items: center; gap: 4px;
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+            box-shadow: 0 0 10px rgba(255, 51, 51, 0.4);
             animation: glowPro 2s infinite alternate;
         }
         @keyframes glowPro {
-            0% { box-shadow: 0 0 5px rgba(255, 215, 0, 0.4); }
-            100% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.8); }
+            0% { box-shadow: 0 0 5px rgba(255, 51, 51, 0.4); }
+            100% { box-shadow: 0 0 15px rgba(255, 99, 71, 0.8); }
         }
 
         .chat-box { flex: 1; padding: 20px 18px; overflow-y: auto; -webkit-overflow-scrolling: touch; display: flex; flex-direction: column; gap: 16px; }
 
         /* DASHBOARD MENU AWAL */
         .welcome-menu-wrapper { display: flex; flex-direction: column; justify-content: center; margin-top: auto; margin-bottom: auto; padding-bottom: 30px; }
-        .welcome-title-sub { font-size: 15px; color: var(--text-sub); margin-bottom: 6px; font-weight: 500; }
+        .welcome-title-sub { font-size: 15px; color: #ff9900; margin-bottom: 6px; font-weight: 600; }
         .welcome-title-main { font-size: 24px; font-weight: bold; line-height: 1.3; color: var(--text-main); margin-bottom: 25px; }
         
-        /* CSS VIDEO NAMIRU - DIUBAH MENJADI LEBIH LUAS */
         .welcome-video-container { display: flex; justify-content: center; margin-bottom: 15px; }
-        .welcome-video { width: 90%; max-width: 400px; height: 220px; border-radius: 15px; object-fit: cover; border: 3px solid #ffd700; box-shadow: 0 0 15px rgba(255, 215, 0, 0.3); cursor: pointer; }
+        .welcome-video { width: 90%; max-width: 400px; height: 220px; border-radius: 15px; object-fit: cover; border: 3px solid #ff3333; box-shadow: 0 0 15px rgba(255, 51, 51, 0.4); cursor: pointer; }
 
         .menu-pills-container { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
         .menu-pill {
@@ -170,21 +172,22 @@
         }
         .menu-pill:hover { transform: scale(1.03); background: rgba(255, 255, 255, 0.1); }
 
-        /* KELOMPOK GELEMBUNG CHAT DENGAN LOGO TEKS */
+        /* KELOMPOK GELEMBUNG CHAT DENGAN LOGO BARU */
         .msg-row { display: flex; width: 100%; gap: 8px; align-items: flex-start; flex-direction: column; }
         .msg-row.user-row { align-items: flex-end; }
         
-        .chat-text-logo { font-size: 11px; font-weight: bold; color: #00ffaa; margin-left: 4px; margin-bottom: -4px; opacity: 0.95; display: inline-flex; align-items: center; gap: 6px; }
-        .chat-text-user-logo { font-size: 11px; font-weight: bold; color: #aaaaaa; margin-right: 4px; margin-bottom: -4px; }
+        .chat-text-logo { font-size: 11px; font-weight: bold; color: #ff3333; margin-left: 4px; margin-bottom: -4px; opacity: 0.95; display: inline-flex; align-items: center; gap: 6px; }
+        .chat-text-user-logo { font-size: 11px; font-weight: bold; color: var(--text-sub); margin-right: 4px; margin-bottom: -4px; }
 
         .msg { max-width: 85%; padding: 10px 14px; font-size: 13px; line-height: 1.5; word-wrap: break-word; width: fit-content; }
         .msg.namiru { border-radius: 4px 14px 14px 14px; border: 1px solid var(--border-color); }
         [data-theme="dark"] .msg.namiru { background: rgba(20, 20, 20, 0.95); color: #ffffff; }
+        [data-theme="light"] .msg.namiru { background: #ffffff; color: #111111; }
         .msg.user { background: linear-gradient(135deg, #2c2c2c, #111111); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 14px 14px 4px 14px; color: #ffffff; text-align: left; }
+        [data-theme="light"] .msg.user { background: linear-gradient(135deg, #e0e0e0, #d0d0d0); color: #111111; border: 1px solid #cccccc; }
         .msg.loading { background: rgba(255, 255, 255, 0.02); color: var(--text-sub); font-style: italic; border-radius: 10px; border: 1px dashed var(--border-color); }
         .chat-img { max-width: 100%; max-height: 150px; border-radius: 10px; margin-top: 5px; display: block; }
 
-        /* ANIMASI LOADING TITIK GOYANG */
         .dot-pulse { display: flex; gap: 4px; padding: 4px 8px; }
         .dot-pulse span { width: 6px; height: 6px; background: var(--text-sub); border-radius: 50%; animation: pulse 1.4s infinite ease-in-out both; }
         .dot-pulse span:nth-child(1) { animation-delay: -0.32s; }
@@ -192,7 +195,7 @@
         @keyframes pulse { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
 
         /* PREVIEW FOTO */
-        .image-preview-container { display: none; background: rgba(10, 10, 10, 0.98); padding: 8px 12px; align-items: center; justify-content: space-between; border-top: 1px solid var(--border-color); flex-shrink: 0; }
+        .image-preview-container { display: none; background: var(--bg-header); padding: 8px 12px; align-items: center; justify-content: space-between; border-top: 1px solid var(--border-color); flex-shrink: 0; }
         .preview-box { display: flex; align-items: center; gap: 10px; }
         .preview-box img { width: 40px; height: 40px; border-radius: 6px; object-fit: cover; border: 1px solid #ffffff; }
         .preview-box span { font-size: 11px; color: var(--text-sub); }
@@ -205,9 +208,9 @@
             display: none; align-items: center; justify-content: center; padding: 20px;
         }
         .pro-modal-box {
-            background: #0d0d0d; border: 2px solid #ffd700; border-radius: 16px;
+            background: #0d0d0d; border: 2px solid #ff3333; border-radius: 16px;
             max-width: 400px; width: 100%; padding: 24px; text-align: center;
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+            box-shadow: 0 0 30px rgba(255, 51, 51, 0.3);
             position: relative; animation: modalAnimate 0.3s ease;
         }
         @keyframes modalAnimate {
@@ -219,16 +222,16 @@
             color: #ffffff; cursor: pointer; background: none; border: none; z-index: 10;
         }
         .pro-banner-text-logo {
-            font-size: 28px; font-weight: bold; color: #00ffaa; margin-bottom: 15px;
+            font-size: 24px; font-weight: bold; color: #ff3333; margin-bottom: 15px;
             padding: 15px; background: rgba(255,255,255,0.03); border-radius: 10px;
             border: 1px dashed rgba(255,255,255,0.1); display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%;
         }
-        .pro-title { font-size: 20px; font-weight: bold; color: #ffd700; margin-bottom: 5px; }
+        .pro-title { font-size: 20px; font-weight: bold; color: #ff3333; margin-bottom: 5px; }
         .pro-subtitle { font-size: 12px; color: var(--text-sub); margin-bottom: 15px; }
         
         .pro-features-list { text-align: left; background: rgba(255,255,255,0.03); padding: 12px 16px; border-radius: 10px; margin-bottom: 15px; font-size: 11px; border: 1px solid rgba(255,255,255,0.05); }
         .pro-feature-item { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; color: #ffffff; }
-        .pro-feature-item span { color: #00ffaa; font-weight: bold; }
+        .pro-feature-item span { color: #ff3333; font-weight: bold; }
 
         .pro-options-container { display: flex; flex-direction: column; gap: 8px; }
         .pro-option-card {
@@ -236,25 +239,75 @@
             padding: 10px 14px; display: flex; align-items: center; justify-content: space-between;
             cursor: pointer; transition: all 0.2s;
         }
-        .pro-option-card:hover { border-color: #ffd700; background: #1c1c1c; transform: translateY(-2px); }
+        .pro-option-card:hover { border-color: #ff3333; background: #1c1c1c; transform: translateY(-2px); }
         .pro-option-left { text-align: left; }
         .pro-duration { font-size: 13px; font-weight: bold; color: #ffffff; }
-        .pro-price { font-size: 11px; color: #ffd700; font-weight: 500; }
-        .btn-pro-buy { background: #ffd700; border: none; color: #000; font-size: 11px; font-weight: bold; padding: 5px 10px; border-radius: 6px; cursor: pointer; }
+        .pro-price { font-size: 11px; color: #ff9900; font-weight: 500; }
+        .btn-pro-buy { background: #ff3333; border: none; color: #fff; font-size: 11px; font-weight: bold; padding: 5px 10px; border-radius: 6px; cursor: pointer; }
+
+        /* MODAL IKLAN KEMERDEKAAN (DIPERBESAR & UTUH) */
+        #iklanModal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85); z-index: 9999;
+            display: flex; align-items: center; justify-content: center; padding: 20px;
+        }
+        .iklan-box {
+            background: #0d0d0d; border: 2px solid #ff3333; border-radius: 16px;
+            max-width: 450px; width: 100%; padding: 20px; text-align: center;
+            box-shadow: 0 0 30px rgba(255, 51, 51, 0.3);
+            position: relative; max-height: 90vh; overflow-y: auto;
+        }
+        .btn-tutup-iklan {
+            position: absolute; top: 10px; right: 10px; background: rgba(255, 255, 255, 0.15);
+            color: #ffffff; border: none; border-radius: 50%; width: 32px; height: 32px;
+            font-size: 16px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center;
+            backdrop-filter: blur(4px); z-index: 10; transition: background 0.2s;
+        }
+        .btn-tutup-iklan:hover { background: rgba(255, 51, 51, 0.8); }
+        
+        /* Gambar Diperbesar dan Disetel Utuh (contain) */
+        .iklan-img { 
+            width: 100%; 
+            max-height: 350px; 
+            object-fit: contain; 
+            border-radius: 10px; 
+            margin-bottom: 12px; 
+            background: rgba(0,0,0,0.3);
+        }
+        .iklan-teks { font-size: 12px; line-height: 1.5; font-weight: bold; color: #ffffff; text-align: center; }
 
         /* INPUT AREA BAR BAWAH */
-        .input-area { flex-shrink: 0; display: flex; padding: 12px; background: #080808; border-top: 1px solid var(--border-color); gap: 6px; padding-bottom: calc(12px + env(safe-area-inset-top)); }
+        .input-area { flex-shrink: 0; display: flex; padding: 12px; background: var(--bg-header); border-top: 1px solid var(--border-color); gap: 6px; padding-bottom: calc(12px + env(safe-area-inset-top)); }
         .input-area input[type="text"] { flex: 1; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 8px; padding: 11px 14px; color: var(--text-main); font-size: 14px; outline: none; }
-        .btn-action { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-color); color: var(--text-main); padding: 0 12px; border-radius: 8px; cursor: pointer; font-size: 15px; display: flex; align-items: center; justify-content: center; }
-        .btn-mic { border-color: #00ffaa; color: #00ffaa; }
+        .btn-action { background: var(--bg-input); border: 1px solid var(--border-color); color: var(--text-main); padding: 0 12px; border-radius: 8px; cursor: pointer; font-size: 15px; display: flex; align-items: center; justify-content: center; }
+        .btn-mic { border-color: #ff3333; color: #ff3333; }
         .btn-mic.recording { background: #ff416c; border-color: #ff416c; color: white; animation: pulseMic 1s infinite; }
-        .input-area button[type="submit"] { background: #ffffff; border: none; color: #000000; padding: 0 16px; border-radius: 8px; font-weight: bold; font-size: 13px; cursor: pointer; }
+        .input-area button[type="submit"] { background: #ff3333; border: none; color: #ffffff; padding: 0 16px; border-radius: 8px; font-weight: bold; font-size: 13px; cursor: pointer; }
 
         @keyframes pulseMic { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
-        .branding-footer { text-align: center; font-size: 9px; padding: 4px; color: #666666; background: #030303; flex-shrink: 0; }
+        .branding-footer { text-align: center; font-size: 9px; padding: 4px; color: var(--text-sub); background: var(--bg-body); flex-shrink: 0; }
     </style>
 </head>
-<body>
+<body data-theme="dark">
+
+    <!-- IKLAN MODAL KEMERDEKAAN -->
+    <div id="iklanModal">
+        <div class="iklan-box">
+            <button class="btn-tutup-iklan" onclick="tutupIklan()">✕</button>
+            <img src="https://files.catbox.moe/xm3wi5.png" class="iklan-img" alt="Iklan Kemerdekaan">
+            <div class="iklan-teks">
+                NAMIRU CHAN MENGUCAPKAN<br>
+                SELAMAT HARI KEMERDEKAAN<br>
+                REPUBLIK INDONESIA<br>
+                YANG KE-81<br><br>
+                “Bersatu Berdaulat,<br>
+                Rakyat Sejahtera,<br>
+                Indonesia Maju.”<br><br>
+                Teruslah berkarya, berinovasi, dan menjadi generasi penerus bangsa yang membanggakan!<br><br>
+                MERDEKA! • BERSATU! • BERKARYA! • BERPRESTASI!
+            </div>
+        </div>
+    </div>
 
     <div class="bg-overlay"></div>
 
@@ -282,8 +335,8 @@
             </div>
             <div class="sidebar-item" onclick="ubahTemaMekanis();">
                 <div class="sidebar-left-content">
-                    <span class="sidebar-icon">✨</span>
-                    <span>Ubah Mode Tema</span>
+                    <span class="sidebar-icon">🌓</span>
+                    <span id="labelTemaText">Ubah ke Mode Terang</span>
                 </div>
                 <span class="sidebar-arrow">❯</span>
             </div>
@@ -296,27 +349,27 @@
             <div class="header-left">
                 <div class="burger-menu" onclick="bukaSidebarMekanis()">☰</div>
                 <div class="ai-title" id="headerTitle">
-                    <img src="https://i.postimg.cc/x1kc0Bzk/IMG-20260704-WA0021.jpg" style="width: 24px; height: 24px; border-radius: 50%; object-fit: cover; vertical-align: middle;">
-                    <span>(^~^)• Namiru chan</span>
+                    <img src="https://files.catbox.moe/sf3xji.png" style="width: 24px; height: 24px; border-radius: 50%; object-fit: cover; vertical-align: middle;">
+                    <span>🇮🇩 Namiru chan (RI 81)</span>
                 </div>
             </div>
             <div class="header-right">
                 <button class="btn-pro" onclick="bukaModalPro()">👑 PRO</button>
                 <button id="muteBtn" class="btn-action" style="font-size: 11px; padding: 4px 8px;" onclick="toggleMuteMekanis()">🔊 ON</button>
-                <div class="text-avatar-top" onclick="buatPercakapanBaru()">(^~^)</div>
+                <div class="text-avatar-top" onclick="buatPercakapanBaru()">🇮🇩</div>
             </div>
         </div>
 
         <div class="chat-box" id="chatBox">
             <div class="welcome-menu-wrapper" id="welcomeMenu">
                 <div class="welcome-video-container">
-                    <video class="welcome-video" autoplay loop playsinline poster="https://i.postimg.cc/x1kc0Bzk/IMG-20260704-WA0021.jpg">
+                    <video class="welcome-video" autoplay loop playsinline poster="https://files.catbox.moe/sf3xji.png">
                         <source src="https://files.catbox.moe/4ywo69.mp4" type="video/mp4">
                     </video>
                 </div>
 
-                <div class="welcome-title-sub">Halo Animelovers</div>
-                <div class="welcome-title-main">Sebaiknya kita mulai<br>dari mana?</div>
+                <div class="welcome-title-sub">Dirgahayu Republik Indonesia ke-81 🇮🇩</div>
+                <div class="welcome-title-main">Sebaiknya kita mulai<br>dari mana, Bang?</div>
                 <div class="menu-pills-container">
                     <div class="menu-pill" onclick="pilihMenuPill('🖼️ Buat Gambar')">🖼️ Buat Gambar</div>
                     <div class="menu-pill" onclick="pilihMenuPill('🎸 Buat musik')">🎸 Buat musik</div>
@@ -330,10 +383,10 @@
             <div class="pro-modal-box">
                 <button class="pro-modal-close" onclick="tutupModalPro()">×</button>
                 <div class="pro-banner-text-logo">
-                    <img src="https://i.postimg.cc/x1kc0Bzk/IMG-20260704-WA0021.jpg" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; vertical-align: middle;">
-                    <span>(^~^)• Namiru chan</span>
+                    <img src="https://files.catbox.moe/sf3xji.png" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; vertical-align: middle;">
+                    <span>Namiru chan PRO</span>
                 </div>
-                <div class="pro-title">Namiru PRO Premium</div>
+                <div class="pro-title">Namiru PRO Kemerdekaan</div>
                 <div class="pro-subtitle">Akses fitur spesial tanpa batas</div>
                 
                 <div class="pro-features-list">
@@ -381,26 +434,27 @@
             <input type="file" id="fileInput" accept="image/*" style="display: none;" onchange="handleFotoTerpilled(event)">
             <button type="button" class="btn-action" onclick="document.getElementById('fileInput').click()">＋</button>
             <button type="button" id="micBtn" class="btn-action btn-mic" onclick="mulaiMicPerekam()">🎙️</button>
-            <input type="text" id="userInput" placeholder="Minta Namiru chan" autocomplete="off">
+            <input type="text" id="userInput" placeholder="Minta Namiru chan..." autocomplete="off">
             <button type="submit">Kirim</button>
         </form>
         
-        <div class="branding-footer">© 2026 Hanzz Coding Engine Hub.</div>
+        <div class="branding-footer">© 2026 Hanzz Coding Engine Hub • Spesial HUT RI ke-81.</div>
     </div>
 
     <script>
-        // Logika agar video langsung ter-play saat diklik
         document.addEventListener('DOMContentLoaded', () => {
             const video = document.querySelector('.welcome-video');
-            video.addEventListener('click', () => {
-                if (video.paused) video.play();
-            });
+            if(video) {
+                video.addEventListener('click', () => {
+                    if (video.paused) video.play();
+                });
+            }
         });
 
         let pengenalSuara;
         let isMuted = false;
         let fotoBase64Data = "";
-        let databasePercakapan = JSON.parse(localStorage.getItem('namiru_chats')) || [];
+        let databasePercakapan = JSON.parse(localStorage.getItem('namiru_chats_ri81')) || [];
         let idPercakapanAktif = null;
 
         const chatBox = document.getElementById('chatBox');
@@ -410,6 +464,10 @@
         const sidebarMenu = document.getElementById('sidebarMenu');
         const sidebarOverlay = document.getElementById('sidebarOverlay');
         const historyListContainer = document.getElementById('historyListContainer');
+
+        function tutupIklan() { 
+            document.getElementById('iklanModal').style.display = 'none'; 
+        }
 
         function bukaModalPro() { document.getElementById('proModal').style.display = 'flex'; }
         function tutupModalPro() { document.getElementById('proModal').style.display = 'none'; }
@@ -438,7 +496,20 @@
 
         function pilihMenuPill(perintahTeks) { welcomeMenu.style.display = "none"; userInput.value = perintahTeks; userInput.focus(); }
         function toggleMuteMekanis() { isMuted = !isMuted; document.getElementById('muteBtn').textContent = isMuted ? "🔇 MUTE" : "🔊 ON"; if(isMuted) window.speechSynthesis.cancel(); }
-        function ubahTemaMekanis() { const body = document.body; body.setAttribute('data-theme', body.getAttribute('data-theme') === 'light' ? 'dark' : 'light'); }
+        
+        /* FUNGSI UBAH TEMA GELAP / TERANG SAJA */
+        function ubahTemaMekanis() { 
+            const body = document.body;
+            const labelTema = document.getElementById('labelTemaText');
+            if (body.getAttribute('data-theme') === 'light') {
+                body.setAttribute('data-theme', 'dark');
+                labelTema.textContent = "Ubah ke Mode Terang";
+            } else {
+                body.setAttribute('data-theme', 'light');
+                labelTema.textContent = "Ubah ke Mode Gelap";
+            }
+            tutupSidebarMekanis();
+        }
 
         function namiruBicaraOtomatis(teks) {
             if (isMuted || !('speechSynthesis' in window)) return;
@@ -472,7 +543,7 @@
         }
         function batalPilihFoto() { fotoBase64Data = ""; document.getElementById('fileInput').value = ""; document.getElementById('previewContainer').style.display = 'none'; }
 
-        function simpanKeLocalStorage() { localStorage.setItem('namiru_chats', JSON.stringify(databasePercakapan)); }
+        function simpanKeLocalStorage() { localStorage.setItem('namiru_chats_ri81', JSON.stringify(databasePercakapan)); }
 
         function renderRiwayatSidebar(filterText = "") {
             if (!historyListContainer) return;
@@ -527,9 +598,8 @@
             chatBox.innerHTML = ""; 
             chatBox.appendChild(welcomeMenu); 
             welcomeMenu.style.display = "flex"; 
-            document.getElementById('headerTitle').innerHTML = '<img src="https://i.postimg.cc/x1kc0Bzk/IMG-20260704-WA0021.jpg" style="width: 24px; height: 24px; border-radius: 50%; object-fit: cover; vertical-align: middle;"> <span>(^~^)• Namiru chan</span>'; 
+            document.getElementById('headerTitle').innerHTML = '<img src="https://files.catbox.moe/sf3xji.png" style="width: 24px; height: 24px; border-radius: 50%; object-fit: cover; vertical-align: middle;"> <span>🇮🇩 Namiru chan (RI 81)</span>'; 
             
-            // TAMBAHAN: Memastikan video ter-play saat kembali ke menu awal
             const video = document.querySelector('.welcome-video');
             if(video) video.play(); 
         }
@@ -546,7 +616,7 @@
                 
                 let tagLogo = document.createElement('div');
                 if(log.role === 'namiru') {
-                    tagLogo.className = 'chat-text-logo'; tagLogo.innerHTML = '<img src="https://i.postimg.cc/x1kc0Bzk/IMG-20260704-WA0021.jpg" style="width: 18px; height: 18px; border-radius: 50%; object-fit: cover; vertical-align: middle;">(^~^)• Namiru chan';
+                    tagLogo.className = 'chat-text-logo'; tagLogo.innerHTML = '<img src="https://files.catbox.moe/sf3xji.png" style="width: 18px; height: 18px; border-radius: 50%; object-fit: cover; vertical-align: middle;"> Namiru chan';
                 } else {
                     tagLogo.className = 'chat-text-user-logo'; tagLogo.textContent = 'Kamu';
                 }
@@ -561,7 +631,7 @@
         }
 
         async function dapatkanBalasanTurboAI(pertanyaan, base64Image) {
-            const turboPrompt = "Kamu adalah Namiru chan, AI responsif buatan Bos ABHIZAN. Jawab dengan padat, langsung inti pokok, ramah, santai & cepat.";
+            const turboPrompt = "Kamu adalah Namiru chan, AI responsif buatan Bos ABHIZAN. Saat ini dalam rangka merayakan HUT Kemerdekaan Republik Indonesia ke-81. Jawab dengan padat, semangat kemerdekaan, ramah, dan santai.";
             let messageContent = [];
             if (base64Image) {
                 messageContent.push({ type: "text", text: pertanyaan });
@@ -579,7 +649,7 @@
                     })
                 });
                 if (response.ok) return (await response.text()).trim();
-                return "Jaringan terputus. Kirim ulang, Bang.";
+                return "Jaringan terputus, Bang. Coba kirim ulang!";
             } catch (error) { return "Gagal memuat jawaban."; }
         }
 
@@ -588,7 +658,7 @@
             let loadRow = document.createElement('div');
             loadRow.id = idLoading;
             loadRow.className = 'msg-row namiru-row';
-            loadRow.innerHTML = `<div class="chat-text-logo"><img src="https://i.postimg.cc/x1kc0Bzk/IMG-20260704-WA0021.jpg" style="width: 18px; height: 18px; border-radius: 50%;"> Namiru chan</div><div class="msg namiru loading">Sedang menggambar... 🎨</div>`;
+            loadRow.innerHTML = `<div class="chat-text-logo"><img src="https://files.catbox.moe/sf3xji.png" style="width: 18px; height: 18px; border-radius: 50%;"> Namiru chan</div><div class="msg namiru loading">Sedang meracik gambar kemerdekaan... 🎨</div>`;
             chatBox.appendChild(loadRow);
             chatBox.scrollTop = chatBox.scrollHeight;
 
@@ -600,8 +670,8 @@
                 let namiruRow = document.createElement('div');
                 namiruRow.className = 'msg-row namiru-row';
                 namiruRow.innerHTML = `
-                    <div class="chat-text-logo"><img src="https://i.postimg.cc/x1kc0Bzk/IMG-20260704-WA0021.jpg" style="width: 18px; height: 18px; border-radius: 50%;"> Namiru chan</div>
-                    <div class="msg namiru">Ini gambarnya, Bang! <br> 
+                    <div class="chat-text-logo"><img src="https://files.catbox.moe/sf3xji.png" style="width: 18px; height: 18px; border-radius: 50%;"> Namiru chan</div>
+                    <div class="msg namiru">Nih gambarnya, Bang! Merdeka! <br> 
                         <a href="${imageUrl}" target="_blank">
                             <img src="${imageUrl}" style="max-width: 100%; border-radius: 12px; margin-top: 10px;">
                         </a>
@@ -663,7 +733,7 @@
 
             let loadRow = document.createElement('div');
             loadRow.className = 'msg-row namiru-row';
-            let avLoad = document.createElement('div'); avLoad.className = 'chat-text-logo'; avLoad.innerHTML = '<img src="https://i.postimg.cc/x1kc0Bzk/IMG-20260704-WA0021.jpg" style="width: 18px; height: 18px; border-radius: 50%; object-fit: cover; vertical-align: middle;">(^~^)• Namiru chan'; loadRow.appendChild(avLoad);
+            let avLoad = document.createElement('div'); avLoad.className = 'chat-text-logo'; avLoad.innerHTML = '<img src="https://files.catbox.moe/sf3xji.png" style="width: 18px; height: 18px; border-radius: 50%; object-fit: cover; vertical-align: middle;"> Namiru chan'; loadRow.appendChild(avLoad);
             let loadingBubble = document.createElement('div');
             loadingBubble.className = 'msg namiru loading';
             loadingBubble.innerHTML = '<div class="dot-pulse"><span></span><span></span><span></span></div>';
@@ -674,7 +744,7 @@
 
             let namiruRow = document.createElement('div');
             namiruRow.className = 'msg-row namiru-row';
-            let avNamiru = document.createElement('div'); avNamiru.className = 'chat-text-logo'; avNamiru.innerHTML = '<img src="https://i.postimg.cc/x1kc0Bzk/IMG-20260704-WA0021.jpg" style="width: 18px; height: 18px; border-radius: 50%; object-fit: cover; vertical-align: middle;">(^~^)• Namiru chan'; namiruRow.appendChild(avNamiru);
+            let avNamiru = document.createElement('div'); avNamiru.className = 'chat-text-logo'; avNamiru.innerHTML = '<img src="https://files.catbox.moe/sf3xji.png" style="width: 18px; height: 18px; border-radius: 50%; object-fit: cover; vertical-align: middle;"> Namiru chan'; namiruRow.appendChild(avNamiru);
             let namiruBubble = document.createElement('div');
             namiruBubble.className = 'msg namiru'; namiruBubble.innerHTML = balasanAI.replace(/\n/g, "<br>");
             namiruRow.appendChild(namiruBubble); chatBox.appendChild(namiruRow);
